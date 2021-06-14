@@ -46,6 +46,7 @@ namespace GameDataParser.Parsers
                 XmlNode npcAiInfoNode = document.SelectSingleNode("ms2/environment/aiInfo") ?? document.SelectSingleNode("ms2/aiInfo");
                 XmlNode npcDeadNode = document.SelectSingleNode("ms2/environment/dead") ?? document.SelectSingleNode("ms2/dead");
                 XmlNode npcDropItemNode = document.SelectSingleNode("ms2/environment/dropiteminfo") ?? document.SelectSingleNode("ms2/dropiteminfo");
+                XmlNode npcNormalNode = document.SelectSingleNode("ms2/environment/normal") ?? document.SelectSingleNode("ms2/normal");
                 XmlAttributeCollection statsCollection = npcStatsNode.Attributes;
 
                 // Metadata
@@ -92,6 +93,10 @@ namespace GameDataParser.Parsers
                 metadata.GlobalDropBoxIds = string.IsNullOrEmpty(npcDropItemNode.Attributes["globalDropBoxId"].Value) ? Array.Empty<int>() : Array.ConvertAll(npcDropItemNode.Attributes["globalDropBoxId"].Value.Split(","), int.Parse);
                 metadata.Kind = short.Parse(npcBasicNode.Attributes["kind"].Value);
                 metadata.ShopId = int.Parse(npcBasicNode.Attributes["shopId"].Value);
+
+                metadata.Actions = npcNormalNode.Attributes["action"].Value.Split(",");
+                metadata.ActionsProbablities = Array.ConvertAll(npcNormalNode.Attributes["prob"].Value.Split(","), s => int.Parse(s));
+                metadata.MoveArea = int.Parse(npcNormalNode.Attributes["movearea"].Value);
                 npcs.Add(metadata);
             }
 

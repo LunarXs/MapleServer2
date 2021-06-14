@@ -51,6 +51,12 @@ namespace Maple2Storage.Types.Metadata
         public short Kind; // 13 = Shop
         [XmlElement(Order = 22)]
         public int ShopId;
+        [XmlElement(Order = 23)]
+        public string[] Actions;
+        [XmlElement(Order = 24)]
+        public int[] ActionsProbablities;
+        [XmlElement(Order = 25)]
+        public int MoveArea;
 
         public NpcMetadata() { }
 
